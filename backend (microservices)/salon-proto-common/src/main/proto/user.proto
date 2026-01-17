@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "UserServiceProto";
+
+service UserService {
+  rpc GetUserByJwtToken (GetUserByJwtTokenRequest) returns (UserResponse);
+  rpc GetUserById (GetUserByIdRequest) returns (UserResponse);
+  rpc GetUserByEmail (GetUserByEmailRequest) returns (UserResponse);
+}
+
+message GetUserByJwtTokenRequest {
+  string jwt_token = 1;
+}
+
+message GetUserByIdRequest {
+  int64 user_id = 1;
+}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+message UserResponse {
+  int64 id = 1;
+  string full_name = 2;
+  string email = 3;
+  string role = 4;
+  string username = 5;
+  string phone = 6;
+}

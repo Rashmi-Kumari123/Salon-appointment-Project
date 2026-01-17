@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "CategoryServiceProto";
+
+service CategoryService {
+  rpc GetCategoryById (GetCategoryByIdRequest) returns (CategoryResponse);
+}
+
+message GetCategoryByIdRequest {
+  int64 category_id = 1;
+}
+
+message CategoryResponse {
+  int64 id = 1;
+  string name = 2;
+  string image = 3;
+  int64 salon_id = 4;
+}

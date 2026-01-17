@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "SalonServiceProto";
+
+service SalonService {
+  rpc GetSalonByOwner (GetSalonByOwnerRequest) returns (SalonResponse);
+  rpc GetSalonById (GetSalonByIdRequest) returns (SalonResponse);
+}
+
+message GetSalonByOwnerRequest {
+  string jwt_token = 1;
+}
+
+message GetSalonByIdRequest {
+  int64 salon_id = 1;
+}
+
+message SalonResponse {
+  int64 id = 1;
+  string name = 2;
+  string address = 3;
+  string phone_number = 4;
+  string email = 5;
+  string city = 6;
+  bool is_open = 7;
+  bool home_service = 8;
+  bool active = 9;
+  int64 owner_id = 10;
+  string open_time = 11;  // LocalTime as string (HH:mm:ss)
+  string close_time = 12;  // LocalTime as string (HH:mm:ss)
+  repeated string images = 13;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "PaymentServiceProto";
+
+service PaymentService {
+  rpc CreatePaymentLink (CreatePaymentLinkRequest) returns (PaymentLinkResponse);
+}
+
+message CreatePaymentLinkRequest {
+  string jwt_token = 1;
+  BookingMessage booking = 2;
+  string payment_method = 3;  // PaymentMethod enum as string
+}
+
+message BookingMessage {
+  int64 id = 1;
+  int64 salon_id = 2;
+  int64 customer_id = 3;
+  string start_time = 4;  // LocalDateTime as string (ISO format)
+  string end_time = 5;     // LocalDateTime as string (ISO format)
+  repeated int64 service_ids = 6;
+  string status = 7;      // BookingStatus enum as string
+  int32 total_price = 8;
+}
+
+message PaymentLinkResponse {
+  string payment_link_url = 1;
+  string payment_link_id = 2;
+}

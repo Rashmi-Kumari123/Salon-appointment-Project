@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "ServiceOfferingServiceProto";
+
+service ServiceOfferingService {
+  rpc GetServicesByIds (GetServicesByIdsRequest) returns (GetServicesByIdsResponse);
+}
+
+message GetServicesByIdsRequest {
+  repeated int64 service_ids = 1;
+}
+
+message GetServicesByIdsResponse {
+  repeated ServiceOfferingResponse services = 1;
+}
+
+message ServiceOfferingResponse {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  int32 price = 4;
+  int32 duration = 5;
+  int64 salon_id = 6;
+  bool available = 7;
+  int64 category_id = 8;
+  string image = 9;
+}

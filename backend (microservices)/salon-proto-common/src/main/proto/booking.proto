@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package com.sitare.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.sitare.grpc";
+option java_outer_classname = "BookingServiceProto";
+
+service BookingService {
+  rpc GetBookingById (GetBookingByIdRequest) returns (BookingResponse);
+}
+
+message GetBookingByIdRequest {
+  int64 booking_id = 1;
+}
+
+message BookingResponse {
+  int64 id = 1;
+  int64 salon_id = 2;
+  int64 customer_id = 3;
+  string start_time = 4;  // LocalDateTime as string (ISO format)
+  string end_time = 5;    // LocalDateTime as string (ISO format)
+  repeated int64 service_ids = 6;
+  string status = 7;      // BookingStatus as string
+  int32 total_price = 8;
+}
