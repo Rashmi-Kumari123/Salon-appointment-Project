@@ -32,6 +32,7 @@
 		<!-- Infrastructure -->
 		<module>eurekaserver</module>
 		<!-- Microservices -->
+		<module>auth-service</module>
 		<module>user-service</module>
 		<module>salon</module>
 		<module>category</module>
@@ -118,6 +119,13 @@
 				<groupId>com.stripe</groupId>
 				<artifactId>stripe-java</artifactId>
 				<version>20.62.0</version>
+			</dependency>
+			
+			<!-- OpenAPI/Swagger -->
+			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+				<version>2.3.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -2,7 +2,7 @@
 
 spring:
   datasource:
-    url: "jdbc:h2:mem:testdb"
+    url: "jdbc:h2:mem:testdb;MODE=MySQL;DATABASE_TO_LOWER=TRUE"
     driver-class-name: org.h2.Driver
     username: sa
     password: 
@@ -10,8 +10,31 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+  
+  # Disable Kafka auto-configuration in tests
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  
+  # Disable Eureka client in tests
+  cloud:
+    discovery:
+      enabled: false
+
+# Disable Eureka client registration
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+# Kafka configuration (disabled but kept for reference)
+# kafka:
+#   bootstrap-servers: localhost:9092
+#   producer:
+#     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
