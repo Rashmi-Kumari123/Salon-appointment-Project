@@ -5,7 +5,6 @@ import com.sitare.modal.User;
 
 import com.sitare.repository.UserRepository;
 
-import com.sitare.service.JwtService;
 import com.sitare.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
-	private final JwtService jwtService;
 
 	@Override
 	public User getUserByEmail(String email) throws UserException {
@@ -29,25 +27,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserFromJwtToken(String jwt) throws Exception {
-		// Remove "Bearer " prefix if present
-		if (jwt != null && jwt.startsWith("Bearer ")) {
-			jwt = jwt.substring(7);
-		}
-		
-		// Extract email from JWT token
-		String email = jwtService.extractEmail(jwt);
-		
-		// Validate token
-		if (jwtService.isTokenExpired(jwt)) {
-			throw new Exception("Token has expired");
-		}
-		
-		// Get user from database
-		User user = userRepository.findByEmail(email);
-		if (user == null) {
-			throw new UserException("User not found with email: " + email);
-		}
-		return user;
+		// JWT validation is handled by gateway/auth-service
+		// This method is kept for backward compatibility but should be refactored
+		// to accept user ID or email directly instead of JWT token
+		throw new UnsupportedOperationException("JWT validation moved to auth-service. Use getUserById or getUserByEmail instead.");
 	}
 
 	@Override

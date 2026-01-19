@@ -1,7 +1,6 @@
 package com.sitare.grpc;
 import com.sitare.exception.UserException;
 import com.sitare.modal.User;
-import com.sitare.service.JwtService;
 import com.sitare.service.UserService;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 
     private final UserService userService;
-    private final JwtService jwtService;
 
     @Override
     public void getUserByJwtToken(GetUserByJwtTokenRequest request, StreamObserver<UserResponse> responseObserver) {

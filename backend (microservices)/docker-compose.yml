@@ -72,6 +72,40 @@ services:
       retries: 10
       start_period: 10s
 
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "6001:6001"  # HTTP port
+      - "9002:9002"  # gRPC port
+    environment:
+      SPRING_APPLICATION_NAME: auth
+      SERVER_PORT: 6001
+      GRPC_SERVER_PORT: 9002
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/salon_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Rashmi@123
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      JWT_SECRET: ${JWT_SECRET:-your-256-bit-secret-key-for-jwt-token-generation-must-be-at-least-256-bits-long}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - mywebsitedev
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent localhost:6001/actuator/health/readiness | grep UP || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
   user-service:
     build:
       context: ./user-service
@@ -146,11 +180,11 @@ services:
     container_name: category
     ports:
       - "5004:5004"  # HTTP port
-      - "9092:9092"  # gRPC port
+      - "9096:9096"  # gRPC port (changed from 9092 to avoid conflict with Kafka)
     environment:
       SPRING_APPLICATION_NAME: category
       SERVER_PORT: 5004
-      GRPC_SERVER_PORT: 9092
+      GRPC_SERVER_PORT: 9096
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/salon_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Kolkata&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Rashmi@123
@@ -193,7 +227,7 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       GRPC_CLIENT_USER_SERVICE_ADDRESS: static://user-service:9090
       GRPC_CLIENT_SALON_SERVICE_ADDRESS: static://salon:9091
-      GRPC_CLIENT_CATEGORY_SERVICE_ADDRESS: static://category:9092
+      GRPC_CLIENT_CATEGORY_SERVICE_ADDRESS: static://category:9096
     depends_on:
       mysql:
         condition: service_healthy

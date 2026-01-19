@@ -1,4 +1,4 @@
-package com.sitare.service;
+package com.sitare.authservice.service;
 
 import com.sitare.domain.UserRole;
 import io.jsonwebtoken.Claims;
@@ -112,5 +112,9 @@ public class JwtService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Long getJwtExpiration() {
+        return jwtExpiration;
     }
 }
