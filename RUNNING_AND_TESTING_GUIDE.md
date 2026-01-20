@@ -48,7 +48,7 @@ mvn clean install
 Start MySQL, Kafka, Zookeeper, and Eureka first:
 
 ```bash
-cd "backend (microservices)/docker-compose/default"
+cd "backend (microservices)"
 
 # Start infrastructure services only
 docker-compose up -d mysql zookeeper kafka eurekaserver
@@ -180,7 +180,7 @@ docker-compose up -d category review payment
 
 #### Option 1: Sequential (Safest - Recommended for First Time)
 ```bash
-cd "backend (microservices)/docker-compose/default"
+cd "backend (microservices)"
 
 # After Eureka is running and healthy
 docker-compose up -d user-service
@@ -207,7 +207,7 @@ docker-compose up -d gateway-server
 #### Option 2: Using Docker Compose Dependencies (Recommended)
 ```bash
 # Docker Compose handles dependencies automatically based on depends_on configuration
-cd "backend (microservices)/docker-compose/default"
+cd "backend (microservices)"
 docker-compose up -d
 ```
 
