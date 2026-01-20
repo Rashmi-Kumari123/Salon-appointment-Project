@@ -22,11 +22,21 @@ public class UserController {
 
 	@GetMapping("/api/users/profile")
 	public ResponseEntity<UserDTO> getUserFromJwtToken(
-			@RequestHeader("Authorization") String jwt) throws Exception {
+			@RequestHeader(value = "X-User-Id", required = false) Long userId) throws Exception {
 
-		User user = userService.getUserFromJwtToken(jwt);
-		UserDTO userDTO=userMapper.mapToDTO(user);
-		return new ResponseEntity<>(userDTO,HttpStatus.OK);
+		// Gateway validates JWT and adds X-User-Id header
+		// Use userId from header instead of parsing JWT token
+		if (userId == null) {
+			throw new UserException("User ID not found in request headers. Please ensure you are authenticated.");
+		}
+		
+		User user = userService.getUserById(userId);
+		if (user == null) {
+			throw new UserException("User not found with ID: " + userId);
+		}
+		
+		UserDTO userDTO = userMapper.mapToDTO(user);
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/api/users/{userId}")

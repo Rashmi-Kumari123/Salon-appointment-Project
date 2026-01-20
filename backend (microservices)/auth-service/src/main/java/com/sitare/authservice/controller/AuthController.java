@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @Tag(name = "Authentication", description = "Authentication and authorization APIs")
 @RequiredArgsConstructor
 public class AuthController {
