@@ -1,0 +1,73 @@
+/* Background */
+.contact-container {
+  background-color: #c9f6f9; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+/* Card */
+.contact-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.contact-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.contact-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.contact-icon {
+  font-size: 2rem;
+  color: #0077ff;
+  margin-bottom: 0.5rem;
+}
+
+/* Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #b14cff;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #5a17ff;
+}
+
+/* Button */
+.contact-form button {
+  background: white;
+  color: black;
+  font-weight: bold;
+  border: 2px solid #5a17ff;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #5a17ff;
+  color: white;
+}
